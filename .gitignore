@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+server/static/
+
+# System Files
+.DS_Store

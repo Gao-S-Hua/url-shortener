@@ -1,0 +1,26 @@
+{
+  "name": "url-shortener",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=11"
+  },
+  "scripts": {
+    "dev:web": "cd client && pnpm run dev",
+    "dev:server": "cd server && pnpm run start:dev",
+    "build:client": "node scripts/build-client.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,css,html}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7"
+  }
+}
