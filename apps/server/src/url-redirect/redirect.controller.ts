@@ -1,5 +1,6 @@
 import { Controller, Get, Logger, Param, Res } from '@nestjs/common';
 import type { Response } from 'express';
+import { INDEX_HTML_PATH } from '../constants';
 import { UrlManageService } from '../url-manage/url-manage.service';
 
 @Controller()
@@ -13,8 +14,7 @@ export class RedirectController {
     const originalUrl = await this.urlManageService.redirect(shortCode);
     if (!originalUrl) {
       this.logger.warn(`Short code not found: ${shortCode}`);
-      res.status(404);
-      return res.send(`Cannot find code for ${shortCode}`);
+      return res.sendFile(INDEX_HTML_PATH);
     }
     res.redirect(302, originalUrl);
   }

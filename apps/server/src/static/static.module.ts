@@ -3,12 +3,10 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { StaticController } from './static.controller';
 
-const staticRoot = join(process.cwd(), 'static');
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(staticRoot, 'assets'),
+      rootPath: join(__dirname, '../..', 'static', 'assets'),
       serveRoot: '/assets',
     }),
   ],

@@ -18,7 +18,10 @@ function bail(message) {
 // 1. Build the client
 console.log('📦 Building client...');
 try {
-  execSync('pnpm run build', { cwd: clientDir, stdio: 'inherit' });
+  execSync('pnpm --filter @url-shortener/client build', {
+    cwd: root,
+    stdio: 'inherit',
+  });
 } catch {
   bail('Client build failed.');
 }

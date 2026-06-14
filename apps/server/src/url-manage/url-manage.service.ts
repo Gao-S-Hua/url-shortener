@@ -53,8 +53,8 @@ export class UrlManageService {
     limit = 20,
   ): Promise<PaginatedResult<ShortUrlEntity>> {
     const [data, total] = await this.shortUrlRepo.findAndCount({
-      where: { deletedAt: IsNull() },
-      order: { createdAt: 'DESC' },
+      where: {},
+      order: { id: 'DESC' },
       skip: (page - 1) * limit,
       take: limit,
     });

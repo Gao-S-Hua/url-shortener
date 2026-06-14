@@ -1,0 +1,67 @@
+.container {
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.inputSection {
+  max-width: 600px;
+  margin: 0 auto 24px;
+}
+
+.label {
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.errorText {
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.genButton {
+  margin-top: 12px;
+}
+
+.genButtonWithError {
+  margin-top: 8px;
+}
+
+/* ShortUrlResult */
+.resultWrapper {
+  text-align: center;
+}
+
+.resultBox {
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.resultLabel {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* QrCodeResult */
+.qrWrapper {
+  text-align: center;
+}
+
+.qrLabel {
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.qrCanvas {
+  display: inline-block;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.qrDownloadBtn {
+  margin-top: 16px;
+}

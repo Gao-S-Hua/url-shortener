@@ -1,0 +1,23 @@
+.container {
+  padding: clamp(12px, 3vw, 24px);
+  border-radius: 8px;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(16px, 2.5vw, 20px);
+}
+
+.modalLabel {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
