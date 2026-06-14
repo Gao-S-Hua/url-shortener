@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UrlManageService } from './url-manage.service';
 
 @Controller('api/urls')
@@ -8,6 +20,20 @@ export class UrlManageController {
   @Post()
   async create(@Body('originalUrl') originalUrl: string) {
     return this.urlManageService.create(originalUrl);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('originalUrl') originalUrl: string,
+  ) {
+    return this.urlManageService.update(id, originalUrl);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.urlManageService.delete(id);
   }
 
   @Get(':code')

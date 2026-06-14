@@ -33,4 +33,7 @@ export class ShortUrlEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'datetime' })
   @Index()
   updatedAt!: Date;
+
+  @Column({ name: 'deleted_at', type: 'datetime', nullable: true })
+  deletedAt?: Date | null;
 }

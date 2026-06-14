@@ -10,14 +10,12 @@ export class RedirectController {
 
   @Get(':code')
   async redirect(@Param('code') shortCode: string, @Res() res: Response) {
-    const record = await this.urlManageService.findByCode(shortCode);
-    if (!record) {
+    const originalUrl = await this.urlManageService.redirect(shortCode);
+    if (!originalUrl) {
       this.logger.warn(`Short code not found: ${shortCode}`);
       res.status(404);
       return res.send(`Cannot find code for ${shortCode}`);
     }
-
-    await this.urlManageService.incrementClickCount(record.id);
-    res.redirect(302, record.originalUrl);
+    res.redirect(302, originalUrl);
   }
 }
