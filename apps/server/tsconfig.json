@@ -15,7 +15,6 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "types": ["node"],
-    "incremental": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   }

@@ -28,5 +28,12 @@
         "organizeImports": "on"
       }
     }
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "useImportType": "off"
+      }
+    }
   }
 }

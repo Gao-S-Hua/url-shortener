@@ -1,7 +1,7 @@
 node_modules/
 dist/
 .env
-server/static/
+apps/server/static/
 
 # System Files
 .DS_Store

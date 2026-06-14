@@ -1,0 +1,11 @@
+CREATE TABLE short_url (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    short_code VARCHAR(16) NOT NULL,
+    original_url TEXT NOT NULL,
+    click_count INT UNSIGNED NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    UNIQUE KEY uk_short_code (short_code),
+    KEY idx_updated_at (updated_at)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;

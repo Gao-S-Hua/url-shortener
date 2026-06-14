@@ -6,8 +6,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const clientDir = resolve(root, 'client');
-const staticDir = resolve(root, 'server', 'static');
+const clientDir = resolve(root, 'apps/client');
+const staticDir = resolve(root, 'apps/server', 'static');
 const distDir = resolve(clientDir, 'dist');
 
 function bail(message) {
@@ -44,4 +44,4 @@ try {
 }
 console.log('✅ Copy done.');
 
-console.log('🚀 Deploy complete.');
+console.log('🚀 Build complete.');
