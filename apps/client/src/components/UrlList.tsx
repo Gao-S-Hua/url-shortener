@@ -197,6 +197,7 @@ export default function UrlList() {
           />
           <Button
             icon={<EditOutlined />}
+            disabled={!!record.deletedAt}
             size="medium"
             onClick={() => handleEditOpen(record)}
           />
@@ -215,6 +216,7 @@ export default function UrlList() {
             <Button
               icon={<DeleteOutlined />}
               size="medium"
+              disabled={!!record.deletedAt}
               danger
               loading={deletingId === record.id}
             />

@@ -8,6 +8,7 @@
     "dev:server": "cd apps/server && pnpm run start:dev",
     "build:client": "node scripts/build-client.js",
     "build:server": "cd apps/server && pnpm run build",
+    "test": "pnpm -r test",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -17,8 +18,11 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
+    "@types/jest": "^29.5.14",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.7"
+    "jest": "^29.7.0",
+    "lint-staged": "^17.0.7",
+    "ts-jest": "^29.4.11"
   },
   "packageManager": "pnpm@11.5.2"
 }

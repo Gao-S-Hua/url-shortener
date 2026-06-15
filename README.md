@@ -5,14 +5,30 @@ A full-stack URL shortening service built with a modern monorepo architecture.
 - Frontend: React + Vite + Ant Design
 - Backend: NestJS + TypeORM + MySQL
 - Monorepo: pnpm workspace
-- Tooling: Biome (lint/format), Docker
+- Tooling: Biome (lint/format), Jest
+- Deployment: Docker
+
+# Demo
+
+<img src="docs/demo.gif" width="700"/>
+
+# Screenshots
+
+## PC
+
+<img src="docs/pc.png" width="700"/>
+
+## Mobile
+
+<img src="docs/mobile.jpeg" width="700"/>
+
 
 # Architecture Overview
 
 ```
 Client (React/Vite)
 ↓
-API Gateway (NestJS)
+Backend API (NestJS)
 ↓
 Business Service Layer
 ↓
@@ -23,7 +39,7 @@ MySQL DB
 - Generate short URL from original URL
 - Redirect short code → original URL
 - Click tracking (click_count)
-- Short URL List & Management
+- List and manage URLs
 
 
 # Repo Structure
@@ -37,18 +53,19 @@ MySQL DB
 │   │   └── vite.config.ts
 │   │
 │   └── server/ # Backend service (NestJS)
-│       ├── migation/
+│       ├── migration/
 │       ├── src/
 │       │   ├── app/
 │       │   ├── static/
 │       │   ├── url-manage/
 │       │   ├── url-redirect/
 │       │   └── main.ts
-│       └─ .env
+│       └─ scripts
 │
 ├── packages
 │   └── shared/ # Shared types / utils
 │
+├── scripts # scripts for build & deploy
 ├── docker-compose.yml
 ├── pnpm-workspace.yaml
 ├── package.json
@@ -57,8 +74,8 @@ MySQL DB
 
 # Development Environment Setup
 
-- docker
-- node >= 24
+- Docker
+- Node.js >= 24
 
 # Start with docker compose
 
@@ -66,6 +83,15 @@ MySQL DB
 docker compose up
 ```
 
+Open this URL to check the system:
+```text
+http://localhost:3000
+```
+
+Open the Swagger Documentation:
+```text
+http://localhost:3000/swagger/doc#
+```
 # How to dev
 
 ## Setup Env
@@ -82,4 +108,7 @@ pnpm run dev:client
 
 # BE local dev
 pnpm run dev:server
+
+# Testing
+pnpm run test
 ```

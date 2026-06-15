@@ -26,7 +26,7 @@ describe('encodeBase62', () => {
   });
 
   it('encodes for case sensitive', () => {
-    expect(encodeBase62(356)).toBe('5A');
+    expect(encodeBase62(346)).toBe('5A');
     expect(encodeBase62(320)).toBe('5a');
   });
 
