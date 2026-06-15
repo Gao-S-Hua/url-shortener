@@ -3,6 +3,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.header.dark {
+  background: #282828;
+  border-bottom-color: #303030;
 }
 
 .brand {
@@ -21,9 +28,17 @@
   font-weight: 600;
 }
 
+.title.dark {
+  color: #fff;
+}
+
 .actions {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 16px;
+}
+
+.darkIcon {
+  color: #fff;
 }

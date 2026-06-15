@@ -1,6 +1,6 @@
 CREATE TABLE short_url (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
-    short_code VARCHAR(16) COMMENT 'Short Code',
+    short_code VARCHAR(16) COLLATE utf8mb4_bin COMMENT 'Short Code, need to care about case-sensitive',
     original_url TEXT NOT NULL COMMENT 'Orignial URL',
     click_count INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'user click counter',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -9,4 +9,4 @@ CREATE TABLE short_url (
 
     UNIQUE KEY uniq_short_code (short_code),
     KEY idx_updated_at (updated_at)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 AUTO_INCREMENT = 1000;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 AUTO_INCREMENT = 1001;

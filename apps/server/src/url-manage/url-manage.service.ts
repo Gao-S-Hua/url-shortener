@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isValidUrl } from '@url-shortener/shared';
 import { IsNull, type Repository } from 'typeorm';
+import { PaginatedUrlResponseDto } from './dto';
 import { ShortUrlEntity } from './entities/short-url.entity';
 import { encodeBase62 } from './utils';
 @Injectable()
@@ -11,21 +13,16 @@ export class UrlManageService {
   ) {}
 
   async create(originalUrl: string): Promise<ShortUrlEntity> {
-    const entity = await this.shortUrlRepo.save({
-      originalUrl,
-    });
-
-    const shortCode = encodeBase62(entity.id);
-
-    entity.shortCode = shortCode;
-    await this.shortUrlRepo.save(entity);
-
-    return entity;
-  }
-
-  async findByCode(shortCode: string): Promise<ShortUrlEntity | null> {
-    return this.shortUrlRepo.findOne({
-      where: { shortCode, deletedAt: IsNull() },
+    const valid = isValidUrl(originalUrl);
+    if (!valid) {
+      throw new BadRequestException('Invalid URL format');
+    }
+    return this.shortUrlRepo.manager.transaction(async (em) => {
+      const urlRepo = em.getRepository(ShortUrlEntity);
+      const record = await urlRepo.save(new ShortUrlEntity(originalUrl));
+      record.shortCode = encodeBase62(record.id);
+      urlRepo.update({ id: record.id }, { shortCode: record.shortCode });
+      return record;
     });
   }
 
@@ -39,7 +36,9 @@ export class UrlManageService {
   }
 
   async redirect(shortCode: string): Promise<string | undefined> {
-    const record = await this.findByCode(shortCode);
+    const record = await this.shortUrlRepo.findOne({
+      where: { shortCode, deletedAt: IsNull() },
+    });
     if (record) {
       await this.shortUrlRepo.increment({ id: record.id }, 'clickCount', 1);
       return record.originalUrl;
@@ -48,10 +47,7 @@ export class UrlManageService {
     }
   }
 
-  async findAll(
-    page = 1,
-    limit = 20,
-  ): Promise<PaginatedResult<ShortUrlEntity>> {
+  async findAll(page = 1, limit = 20): Promise<PaginatedUrlResponseDto> {
     const [data, total] = await this.shortUrlRepo.findAndCount({
       where: {},
       order: { id: 'DESC' },
@@ -60,11 +56,4 @@ export class UrlManageService {
     });
     return { data, total, page, limit };
   }
-}
-
-export interface PaginatedResult<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
 }

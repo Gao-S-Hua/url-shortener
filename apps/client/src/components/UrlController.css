@@ -46,6 +46,22 @@
   font-weight: 500;
 }
 
+.resultActions {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .resultActions {
+    flex-direction: column;
+    gap: 8px;
+    padding: 4px;
+  }
+  .resultActions > * {
+    height: 44px;
+    border-radius: 12px !important;
+  }
+}
+
 /* QrCodeResult */
 .qrWrapper {
   text-align: center;
@@ -54,6 +70,7 @@
 .qrLabel {
   margin-bottom: 16px;
   font-weight: 500;
+  word-break: break-all;
 }
 
 .qrCanvas {

@@ -4,6 +4,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from '@ant-design/icons';
+import { isValidUrl } from '@url-shortener/shared';
 import {
   Button,
   Input,
@@ -35,7 +36,7 @@ export default function UrlList() {
   const [editingRecord, setEditingRecord] = useState<UrlRecord | null>(null);
   const [editValue, setEditValue] = useState('');
   const [editLoading, setEditLoading] = useState(false);
-  const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set());
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   const fetchData = useCallback(async (page: number, limit: number) => {
     setLoading(true);
@@ -50,8 +51,8 @@ export default function UrlList() {
     }
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <Need to change with refreshCounter>
   useEffect(() => {
-    void refreshCounter;
     fetchData(pagination.page, pagination.limit);
   }, [pagination, refreshCounter, fetchData]);
 
@@ -80,9 +81,20 @@ export default function UrlList() {
 
   const handleEditSave = async () => {
     if (!editingRecord) return;
+    const trimmed = editValue.trim();
+    if (!trimmed) {
+      message.error('Please enter a URL');
+      return;
+    }
+    if (!isValidUrl(trimmed)) {
+      message.error(
+        'Please enter a valid URL (must start with http:// or https://)',
+      );
+      return;
+    }
     setEditLoading(true);
     try {
-      await updateUrl(editingRecord.id, editValue.trim());
+      await updateUrl(editingRecord.id, trimmed);
       message.success('URL updated successfully!');
       setEditModalOpen(false);
       fetchData(pagination.page, pagination.limit);
@@ -94,7 +106,7 @@ export default function UrlList() {
   };
 
   const handleDelete = async (id: number) => {
-    setDeletingIds((prev) => new Set(prev).add(id));
+    setDeletingId(id);
     try {
       await deleteUrl(id);
       message.success('URL deleted successfully!');
@@ -102,11 +114,7 @@ export default function UrlList() {
     } catch {
       message.error('Failed to delete URL');
     } finally {
-      setDeletingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      setDeletingId(null);
     }
   };
 
@@ -118,6 +126,7 @@ export default function UrlList() {
       width: 100,
       render: (code: string) => (
         <a
+          className="defaultFont"
           href={`${SHORT_URL_BASE}/${code}`}
           target="_blank"
           rel="noopener noreferrer"
@@ -133,7 +142,12 @@ export default function UrlList() {
       ellipsis: true,
       width: 200,
       render: (url: string) => (
-        <a href={url} target="_blank" rel="noopener noreferrer">
+        <a
+          className="defaultFont"
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {url}
         </a>
       ),
@@ -153,33 +167,37 @@ export default function UrlList() {
       width: 90,
       render: (deletedAt: string | null | undefined) =>
         deletedAt ? (
-          <Tag color="red">Deleted</Tag>
+          <Tag className="defaultFont" color="red">
+            Deleted
+          </Tag>
         ) : (
-          <Tag color="green">Active</Tag>
+          <Tag className="defaultFont" color="green">
+            Active
+          </Tag>
         ),
     },
     {
       title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      width: 160,
+      width: 180,
       responsive: ['lg'],
       render: (val: string) => new Date(val).toLocaleString(),
     },
     {
       title: 'Actions',
       key: 'actions',
-      width: 180,
+      width: 120,
       render: (_: unknown, record: UrlRecord) => (
         <Space size="small">
           <Button
             icon={<CopyOutlined />}
-            size="small"
+            size="medium"
             onClick={() => handleCopy(record.shortCode)}
           />
           <Button
             icon={<EditOutlined />}
-            size="small"
+            size="medium"
             onClick={() => handleEditOpen(record)}
           />
           <Popconfirm
@@ -188,16 +206,17 @@ export default function UrlList() {
             onConfirm={() => handleDelete(record.id)}
             okText="Delete"
             cancelText="Cancel"
+            placement="topLeft"
             okButtonProps={{
               danger: true,
-              loading: deletingIds.has(record.id),
+              loading: deletingId === record.id,
             }}
           >
             <Button
               icon={<DeleteOutlined />}
-              size="small"
+              size="medium"
               danger
-              loading={deletingIds.has(record.id)}
+              loading={deletingId === record.id}
             />
           </Popconfirm>
         </Space>
@@ -236,7 +255,7 @@ export default function UrlList() {
           pageSize: pagination.limit,
           total,
           showSizeChanger: true,
-          pageSizeOptions: ['10', '20', '50'],
+          pageSizeOptions: ['20', '50'],
           showTotal: (t) => `Total ${t} URLs`,
           size: 'small',
           responsive: true,

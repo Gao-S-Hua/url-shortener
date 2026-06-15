@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from '../constants';
+import { RedirectModule } from '../redirect/redirect.module';
 import { StaticModule } from '../static/static.module';
 import { UrlManageModule } from '../url-manage/url-manage.module';
-import { RedirectModule } from '../url-redirect/redirect.module';
 
 @Module({
   imports: [

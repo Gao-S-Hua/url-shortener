@@ -1,6 +1,7 @@
 import {
   CopyOutlined,
   DownloadOutlined,
+  ExportOutlined,
   LinkOutlined,
   QrcodeOutlined,
 } from '@ant-design/icons';
@@ -56,10 +57,17 @@ function ShortUrlResult() {
         <div className="resultLabel" style={{ color: token.colorText }}>
           Your Short URL:
         </div>
-        <Space.Compact style={{ width: '100%' }}>
+        <Space.Compact className="resultActions">
           <Input value={state.shortUrl} readOnly />
           <Button icon={<CopyOutlined />} onClick={handleCopy}>
             Copy
+          </Button>
+          <Button
+            icon={<ExportOutlined />}
+            type="primary"
+            onClick={() => window.open(state.shortUrl, '_blank', 'noopener')}
+          >
+            Open
           </Button>
         </Space.Compact>
       </div>

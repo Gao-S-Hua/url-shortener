@@ -9,26 +9,15 @@ export default function Header() {
   const { darkMode, toggleDarkMode } = useThemeContext();
 
   return (
-    <AntHeader
-      className="header"
-      style={{
-        background: darkMode ? '#282828' : '#fff',
-        borderBottom: `1px solid ${darkMode ? '#303030' : '#f0f0f0'}`,
-      }}
-    >
+    <AntHeader className={`header${darkMode ? ' dark' : ''}`}>
       <div className="brand">
         <span className="logo">🔗</span>
-        <span
-          className="title"
-          style={{ color: darkMode ? '#fff' : undefined }}
-        >
-          URL Shortener
-        </span>
+        <span className={`title${darkMode ? ' dark' : ''}`}>URL Shortener</span>
       </div>
       <div className="actions">
-        <SunOutlined style={{ color: darkMode ? '#fff' : undefined }} />
+        <SunOutlined className={darkMode ? 'darkIcon' : undefined} />
         <Switch checked={darkMode} onChange={toggleDarkMode} size="small" />
-        <MoonOutlined style={{ color: darkMode ? '#fff' : undefined }} />
+        <MoonOutlined className={darkMode ? 'darkIcon' : undefined} />
       </div>
     </AntHeader>
   );

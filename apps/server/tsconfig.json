@@ -14,8 +14,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "skipLibCheck": true
   }
 }

@@ -3,6 +3,9 @@
   border-radius: 8px;
 }
 
+.defaultFont {
+  font-size: 0.9rem;
+}
 .headerRow {
   display: flex;
   justify-content: space-between;
@@ -20,4 +23,22 @@
 .modalLabel {
   margin-bottom: 8px;
   font-weight: 500;
+}
+
+.desktopActions {
+  display: flex;
+}
+
+.mobileActions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktopActions {
+    display: none;
+  }
+
+  .mobileActions {
+    display: inline-flex;
+  }
 }
