@@ -43,7 +43,6 @@ export class ShortUrlEntity {
 
   @ApiProperty()
   @UpdateDateColumn({ name: 'updated_at', type: 'datetime' })
-  @Index()
   updatedAt: Date;
 
   @ApiProperty()

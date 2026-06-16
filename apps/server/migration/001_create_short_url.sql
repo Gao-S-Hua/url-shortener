@@ -7,6 +7,5 @@ CREATE TABLE short_url (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at DATETIME DEFAULT NULL COMMENT 'NULL: not delete, time: user delete time',
 
-    UNIQUE KEY uniq_short_code (short_code),
-    KEY idx_updated_at (updated_at)
+    UNIQUE KEY uniq_short_code (short_code)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 AUTO_INCREMENT = 1001;

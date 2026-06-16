@@ -10,37 +10,40 @@ A full-stack URL shortening service built with a modern monorepo architecture.
 
 # Demo
 
-<img src="docs/demo.gif" width="700"/>
+<img src="docs/demo.gif" width="800"/>
 
 # Screenshots
 
 ## PC
 
-<img src="docs/pc.png" width="700"/>
+<img src="docs/pc.png" width="800"/>
 
 ## Mobile
 
-<img src="docs/mobile.jpeg" width="700"/>
+<img src="docs/mobile1.jpeg" width="300"/>
 
+<img src="docs/mobile2.jpeg" width="300"/>
+
+<img src="docs/mobile3.jpeg" width="300"/>
+
+<img src="docs/mobile4.jpeg" width="300"/>
+
+
+# Key features
+- Generate short URL from original URL
+- Redirect short URL → original URL
+- Click tracking (click_count)
+- List and manage URLs (allow edit and soft delete the records)
 
 # Architecture Overview
 
 ```
-Client (React/Vite)
-↓
-Backend API (NestJS)
-↓
-Business Service Layer
-↓
+FE Client
+    ↓
+Backend API
+    ↓
 MySQL DB
 ```
-
-# Key features:
-- Generate short URL from original URL
-- Redirect short code → original URL
-- Click tracking (click_count)
-- List and manage URLs
-
 
 # Repo Structure
 
@@ -49,18 +52,22 @@ MySQL DB
 ├── apps
 │   ├── client/ # Frontend application
 │   │   ├── src/
+│   │   │   ├── api/ # API to BE
+│   │   │   ├── components/ # UI components
+│   │   │   ├── pages/ # FE Pages
+│   │   │   └── main.ts
 │   │   ├── index.html
 │   │   └── vite.config.ts
 │   │
 │   └── server/ # Backend service (NestJS)
 │       ├── migration/
 │       ├── src/
-│       │   ├── app/
-│       │   ├── static/
-│       │   ├── url-manage/
-│       │   ├── url-redirect/
-│       │   └── main.ts
-│       └─ scripts
+│       │   ├── app/ # Module of root App
+│       │   ├── static/ # Module to hoist static FE assets
+│       │   ├── url-manage/ # Module to manage URL Records
+│       │   ├── redirect/ # Module to redirect short url
+│       │   └── main.ts # Entry file
+│       └─ scripts/ # Scripts for DB init
 │
 ├── packages
 │   └── shared/ # Shared types / utils
@@ -83,18 +90,16 @@ MySQL DB
 docker compose up
 ```
 
-Open this URL to check the system:
+Access the application:
 ```text
 http://localhost:3000
 ```
 
-Open the Swagger Documentation:
+Swagger Documentation:
 ```text
-http://localhost:3000/swagger/doc#
+http://localhost:3000/swagger/doc
 ```
-# How to dev
-
-## Setup Env
+# Development Setup
 
 Add `.env` file under apps/server (can copy the `.env.example` file and update to your local env)
 
@@ -108,7 +113,11 @@ pnpm run dev:client
 
 # BE local dev
 pnpm run dev:server
+```
 
+# Testing
+
+```bash
 # Testing
 pnpm run test
 ```
